@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculate Real and Diagram Distances Using Scale – Mr. McLean Math</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --bg-alt: #ffffff;
+      --text: #222222;
+      --accent: #1976d2;
+      --accent-soft: #e3f2fd;
+      --correct: #2e7d32;
+      --incorrect: #c62828;
+      --border: #cccccc;
+      --panel: #fafafa;
+    }
+
+    body.high-contrast {
+      --bg: #000000;
+      --bg-alt: #111111;
+      --text: #ffffff;
+      --accent: #ffcc00;
+      --accent-soft: #333333;
+      --correct: #00ff00;
+      --incorrect: #ff5555;
+      --border: #666666;
+      --panel: #000000;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header {
+      background: var(--bg-alt);
+      border-radius: 16px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+
+    header h1 {
+      margin: 0 0 4px 0;
+      font-size: 1.4rem;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .difficulty-group, .mode-group, .settings-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    button, select {
+      font-family: inherit;
+    }
+
+    .pill-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      background: var(--bg-alt);
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s, transform 0.05s, box-shadow 0.15s;
+    }
+
+    .pill-btn span.emoji {
+      font-size: 1rem;
+    }
+
+    .pill-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(25,118,210,0.2);
+    }
+
+    .pill-btn:active {
+      transform: translateY(1px);
+    }
+
+    .toggle-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      background: var(--bg-alt);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-btn.on {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .toggle-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #ddd;
+    }
+
+    .toggle-btn.on .toggle-indicator {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    select {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      background: var(--bg-alt);
+      font-size: 0.85rem;
+    }
+
+    .main-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mode-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mode-tab {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .mode-tab.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .panel {
+      background: var(--bg-alt);
+      border-radius: 16px;
+      padding: 16px 16px 18px 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .question-header {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .question-body {
+      font-size: 1rem;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .question-meta {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+
+    .scale-line {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .input-row input[type="text"] {
+      flex: 1 1 160px;
+      max-width: 260px;
+      padding: 8px 10px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+    }
+
+    .primary-btn {
+      min-width: 90px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .secondary-btn {
+      min-width: 80px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .secondary-btn:disabled,
+    .primary-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .feedback-message {
+      font-size: 0.95rem;
+      min-height: 1.2em;
+    }
+
+    .feedback-message.correct {
+      color: var(--correct);
+      font-weight: 600;
+    }
+
+    .feedback-message.incorrect {
+      color: var(--incorrect);
+      font-weight: 600;
+    }
+
+    .timer-display {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .timer-display.warning {
+      color: #d84315;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .steps-panel {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      font-size: 0.9rem;
+    }
+
+    .steps-panel strong {
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .stats-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .stat-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+    }
+
+    details.summary-panel {
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
+
+    details.summary-panel summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .incorrect-list {
+      margin-top: 6px;
+      padding-left: 16px;
+    }
+
+    .incorrect-item {
+      margin-bottom: 4px;
+    }
+
+    .history-panel {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border);
+      font-size: 0.8rem;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+
+    .history-entry {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .history-entry span.label {
+      opacity: 0.8;
+    }
+
+    .history-entry span.result-c {
+      color: var(--correct);
+    }
+
+    .history-entry span.result-i {
+      color: var(--incorrect);
+    }
+
+    /* Worksheet */
+    .worksheet-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .worksheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .worksheet-table th,
+    .worksheet-table td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      vertical-align: top;
+    }
+
+    .worksheet-table th {
+      background: var(--panel);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .worksheet-answer {
+      font-weight: 600;
+    }
+
+    .hidden-answer {
+      color: transparent;
+      text-shadow: 0 0 12px rgba(0,0,0,0.4);
+      user-select: none;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 8px 16px 10px 16px;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 700px) {
+      .input-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .input-row input[type="text"] {
+        max-width: 100%;
+      }
+
+      header h1 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Calculate Real and Diagram Distances Using Scale</h1>
+    <p>Practice finding real distances and diagram distances using scale factors, with maps, diagrams, and models.</p>
+  </header>
+
+  <div class="top-bar">
+    <div class="difficulty-group" aria-label="Difficulty selection">
+      <span class="badge-label">Difficulty</span>
+      <button class="pill-btn active" data-diff="easy" id="btnDiffEasy"><span class="emoji">🟢</span> Easy</button>
+      <button class="pill-btn" data-diff="medium" id="btnDiffMedium"><span class="emoji">🟡</span> Medium</button>
+      <button class="pill-btn" data-diff="hard" id="btnDiffHard"><span class="emoji">🔴</span> Hard</button>
+      <button class="pill-btn" data-diff="random" id="btnDiffRandom"><span class="emoji">🎲</span> Random</button>
+    </div>
+
+    <div class="settings-group">
+      <label class="badge-label" for="timerSelect">Timer</label>
+      <select id="timerSelect" aria-label="Timer length">
+        <option value="0">Off</option>
+        <option value="30">30 s</option>
+        <option value="60">60 s</option>
+        <option value="90">90 s</option>
+        <option value="120">120 s</option>
+      </select>
+
+      <button class="toggle-btn on" id="btnSoundToggle" aria-pressed="true">
+        <span class="toggle-indicator"></span>
+        Sound
+      </button>
+
+      <button class="toggle-btn" id="btnContrastToggle" aria-pressed="false">
+        <span class="toggle-indicator"></span>
+        High contrast
+      </button>
+    </div>
+  </div>
+
+  <div class="main-panels">
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab active" id="tabGame" data-mode="game" role="tab" aria-selected="true">Game mode</button>
+      <button class="mode-tab" id="tabWorksheet" data-mode="worksheet" role="tab" aria-selected="false">Worksheet mode</button>
+    </div>
+
+    <!-- Game Panel -->
+    <section class="panel" id="gamePanel" role="tabpanel" aria-labelledby="tabGame">
+      <h2>Game</h2>
+      <div class="question-header" id="questionTypeLabel"></div>
+      <div class="question-body" id="questionText"></div>
+      <div class="question-meta" id="questionMeta"></div>
+      <div class="scale-line" id="scaleLine"></div>
+
+      <div class="input-row">
+        <input type="text" id="answerInput" autocomplete="off" inputmode="decimal" aria-label="Your answer">
+        <span id="answerUnitLabel"></span>
+      </div>
+
+      <div class="status-row">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button class="primary-btn" id="btnSubmit">
+            <span id="btnSubmitLabel">Submit</span>
+          </button>
+          <button class="secondary-btn" id="btnNext" disabled>
+            Next
+          </button>
+          <button class="secondary-btn" id="btnShowSteps" disabled>
+            Show steps
+          </button>
+        </div>
+        <div class="timer-display" id="timerDisplay"></div>
+      </div>
+
+      <div class="feedback-message" id="feedbackMessage" aria-live="polite"></div>
+
+      <div class="steps-panel" id="stepsPanel" style="display:none;"></div>
+
+      <div class="stats-panel" aria-label="Session stats">
+        <div class="stat-pill" id="statTotal">Total: 0</div>
+        <div class="stat-pill" id="statCorrect">Correct: 0</div>
+        <div class="stat-pill" id="statAccuracy">Accuracy: 0%</div>
+        <div class="stat-pill" id="statScore">Score: 0</div>
+        <div class="stat-pill" id="statStreak">Streak: 0</div>
+        <div class="stat-pill" id="statBestStreak">Best streak: 0</div>
+      </div>
+
+      <details class="summary-panel">
+        <summary>Session summary (incorrect questions)</summary>
+        <div id="incorrectSummary">
+          No incorrect answers yet.
+        </div>
+      </details>
+
+      <div class="history-panel" id="historyPanel" aria-label="Recent results"></div>
+    </section>
+
+    <!-- Worksheet Panel -->
+    <section class="panel" id="worksheetPanel" role="tabpanel" aria-labelledby="tabWorksheet" style="display:none;">
+      <h2>Worksheet</h2>
+      <div class="worksheet-controls">
+        <span class="badge-label">Difficulty</span>
+        <button class="pill-btn active" data-wdiff="easy" id="wsDiffEasy"><span class="emoji">🟢</span> Easy</button>
+        <button class="pill-btn" data-wdiff="medium" id="wsDiffMedium"><span class="emoji">🟡</span> Medium</button>
+        <button class="pill-btn" data-wdiff="hard" id="wsDiffHard"><span class="emoji">🔴</span> Hard</button>
+        <button class="pill-btn" data-wdiff="random" id="wsDiffRandom"><span class="emoji">🎲</span> Random</button>
+
+        <span class="badge-label">Questions</span>
+        <select id="wsCountSelect">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+
+        <button class="primary-btn" id="btnGenerateWorksheet">Generate</button>
+        <button class="secondary-btn" id="btnRevealAll" disabled>Reveal all</button>
+        <button class="secondary-btn" id="btnHideAll" disabled>Hide all</button>
+      </div>
+      <div id="worksheetInfo" style="font-size:0.85rem;margin-bottom:6px;">
+        Instruction: Calculate the missing real or diagram distances using the given scale. Give your answer in the requested unit.
+      </div>
+      <div style="overflow-x:auto;max-height:420px;">
+        <table class="worksheet-table" id="worksheetTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Question</th>
+              <th>Answer</th>
+              <th>Reveal</th>
+            </tr>
+          </thead>
+          <tbody id="worksheetBody">
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<footer>
+  Created by Mr. McLean Math.
+</footer>
+
+<script>
+(function() {
+  // ---------- Utility ----------
+  function formatNumber(value, decimals) {
+    if (!isFinite(value)) return String(value);
+    const decs = (typeof decimals === "number" && decimals >= 0) ? decimals : null;
+    if (decs !== null) {
+      value = Number(value.toFixed(decs));
+    }
+    const parts = String(value).split(".");
+    let intPart = parts[0];
+    const isNeg = intPart[0] === "-";
+    if (isNeg) intPart = intPart.slice(1);
+    intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    if (isNeg) intPart = "-" + intPart;
+    if (parts.length > 1) {
+      return intPart + "." + parts[1];
+    }
+    return intPart;
+  }
+
+  function parseUserNumber(str) {
+    if (str == null) return NaN;
+    let s = String(str).trim();
+    if (!s) return NaN;
+    s = s.replace(/\s+/g, "");
+    s = s.replace(",", ".");
+    const num = Number(s);
+    return num;
+  }
+
+  function approxEqual(a, b, tolAbs, tolRel) {
+    if (!isFinite(a) || !isFinite(b)) return false;
+    const diff = Math.abs(a - b);
+    const tolA = (typeof tolAbs === "number") ? tolAbs : 0.005;
+    const tolR = (typeof tolRel === "number") ? tolRel : 0.001;
+    if (diff <= tolA) return true;
+    const maxAB = Math.max(Math.abs(a), Math.abs(b));
+    if (maxAB === 0) return diff === 0;
+    return diff / maxAB <= tolR;
+  }
+
+  function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  // ---------- Sound ----------
+  let soundOn = true;
+  let audioCtx = null;
+
+  function playBeep(freq, duration) {
+    if (!soundOn) return;
+    if (!window.AudioContext && !window.webkitAudioContext) return;
+    try {
+      if (!audioCtx) {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new Ctx();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      gain.gain.value = 0.15;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.start(now);
+      osc.stop(now + duration / 1000);
+    } catch (e) {
+      // ignore audio errors
+    }
+  }
+
+  function playCorrectSound() {
+    playBeep(880, 120);
+  }
+
+  function playIncorrectSound() {
+    playBeep(220, 160);
+  }
+
+  // ---------- State ----------
+  const difficultyButtons = {
+    easy: document.getElementById("btnDiffEasy"),
+    medium: document.getElementById("btnDiffMedium"),
+    hard: document.getElementById("btnDiffHard"),
+    random: document.getElementById("btnDiffRandom")
+  };
+  let currentDifficulty = "easy";
+
+  const wsDiffButtons = {
+    easy: document.getElementById("wsDiffEasy"),
+    medium: document.getElementById("wsDiffMedium"),
+    hard: document.getElementById("wsDiffHard"),
+    random: document.getElementById("wsDiffRandom")
+  };
+  let currentWsDifficulty = "easy";
+
+  const tabGame = document.getElementById("tabGame");
+  const tabWorksheet = document.getElementById("tabWorksheet");
+  const gamePanel = document.getElementById("gamePanel");
+  const worksheetPanel = document.getElementById("worksheetPanel");
+
+  const timerSelect = document.getElementById("timerSelect");
+  const timerDisplay = document.getElementById("timerDisplay");
+  let timerSeconds = 0;
+  let timerRemaining = 0;
+  let timerId = null;
+
+  const btnSoundToggle = document.getElementById("btnSoundToggle");
+  const btnContrastToggle = document.getElementById("btnContrastToggle");
+
+  const questionTypeLabel = document.getElementById("questionTypeLabel");
+  const questionText = document.getElementById("questionText");
+  const questionMeta = document.getElementById("questionMeta");
+  const scaleLine = document.getElementById("scaleLine");
+  const answerInput = document.getElementById("answerInput");
+  const answerUnitLabel = document.getElementById("answerUnitLabel");
+  const btnSubmit = document.getElementById("btnSubmit");
+  const btnSubmitLabel = document.getElementById("btnSubmitLabel");
+  const btnNext = document.getElementById("btnNext");
+  const btnShowSteps = document.getElementById("btnShowSteps");
+  const feedbackMessage = document.getElementById("feedbackMessage");
+  const stepsPanel = document.getElementById("stepsPanel");
+
+  const statTotal = document.getElementById("statTotal");
+  const statCorrect = document.getElementById("statCorrect");
+  const statAccuracy = document.getElementById("statAccuracy");
+  const statScore = document.getElementById("statScore");
+  const statStreak = document.getElementById("statStreak");
+  const statBestStreak = document.getElementById("statBestStreak");
+  const incorrectSummary = document.getElementById("incorrectSummary");
+  const historyPanel = document.getElementById("historyPanel");
+
+  const wsCountSelect = document.getElementById("wsCountSelect");
+  const btnGenerateWorksheet = document.getElementById("btnGenerateWorksheet");
+  const btnRevealAll = document.getElementById("btnRevealAll");
+  const btnHideAll = document.getElementById("btnHideAll");
+  const worksheetBody = document.getElementById("worksheetBody");
+
+  let gameState = {
+    mode: "awaitingAnswer", // or "awaitingNext"
+    currentProblem: null,
+    total: 0,
+    correct: 0,
+    score: 0,
+    streak: 0,
+    bestStreak: 0,
+    incorrectQuestions: [],
+    history: []
+  };
+
+  // ---------- Difficulty buttons ----------
+  function setDifficulty(diff) {
+    currentDifficulty = diff;
+    Object.keys(difficultyButtons).forEach(key => {
+      difficultyButtons[key].classList.toggle("active", key === diff);
+    });
+    newQuestion();
+  }
+
+  Object.keys(difficultyButtons).forEach(key => {
+    difficultyButtons[key].addEventListener("click", () => setDifficulty(key));
+  });
+
+  function setWorksheetDifficulty(diff) {
+    currentWsDifficulty = diff;
+    Object.keys(wsDiffButtons).forEach(key => {
+      wsDiffButtons[key].classList.toggle("active", key === diff);
+    });
+  }
+
+  Object.keys(wsDiffButtons).forEach(key => {
+    wsDiffButtons[key].addEventListener("click", () => setWorksheetDifficulty(key));
+  });
+
+  // ---------- Tabs ----------
+  function setMode(mode) {
+    if (mode === "game") {
+      tabGame.classList.add("active");
+      tabGame.setAttribute("aria-selected", "true");
+      tabWorksheet.classList.remove("active");
+      tabWorksheet.setAttribute("aria-selected", "false");
+      gamePanel.style.display = "";
+      worksheetPanel.style.display = "none";
+      answerInput.focus();
+    } else {
+      tabWorksheet.classList.add("active");
+      tabWorksheet.setAttribute("aria-selected", "true");
+      tabGame.classList.remove("active");
+      tabGame.setAttribute("aria-selected", "false");
+      gamePanel.style.display = "none";
+      worksheetPanel.style.display = "";
+    }
+  }
+
+  tabGame.addEventListener("click", () => setMode("game"));
+  tabWorksheet.addEventListener("click", () => setMode("worksheet"));
+
+  // ---------- Timer ----------
+  timerSelect.addEventListener("change", () => {
+    timerSeconds = parseInt(timerSelect.value, 10) || 0;
+    // Next question will use new timer; current one unaffected.
+  });
+
+  function stopTimer() {
+    if (timerId !== null) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+    timerDisplay.textContent = "";
+    timerDisplay.classList.remove("warning");
+  }
+
+  function startTimer() {
+    stopTimer();
+    timerSeconds = parseInt(timerSelect.value, 10) || 0;
+    if (!timerSeconds) return;
+    timerRemaining = timerSeconds;
+    timerDisplay.textContent = "Time: " + timerRemaining + " s";
+
+    timerId = setInterval(() => {
+      timerRemaining -= 1;
+      if (timerRemaining <= 5) {
+        timerDisplay.classList.add("warning");
+      }
+      if (timerRemaining <= 0) {
+        stopTimer();
+        // Time up -> treat as incorrect if still answering
+        if (gameState.mode === "awaitingAnswer") {
+          feedbackMessage.textContent = "Time's up! Reveal the steps and then go to the next question.";
+          feedbackMessage.className = "feedback-message incorrect";
+          playIncorrectSound();
+          btnShowSteps.disabled = false;
+          btnNext.disabled = false;
+          gameState.total += 1;
+          gameState.streak = 0;
+          updateStats();
+          addHistoryEntry(false, true);
+        }
+      } else {
+        timerDisplay.textContent = "Time: " + timerRemaining + " s";
+      }
+    }, 1000);
+  }
+
+  // ---------- High contrast & sound toggles ----------
+  btnSoundToggle.addEventListener("click", () => {
+    soundOn = !soundOn;
+    btnSoundToggle.classList.toggle("on", soundOn);
+    btnSoundToggle.setAttribute("aria-pressed", soundOn ? "true" : "false");
+  });
+
+  btnContrastToggle.addEventListener("click", () => {
+    const on = !document.body.classList.contains("high-contrast");
+    document.body.classList.toggle("high-contrast", on);
+    btnContrastToggle.classList.toggle("on", on);
+    btnContrastToggle.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+
+  // ---------- Problem generation ----------
+  // Units: mm, cm, m, km
+  const unitFactors = {
+    mm: 1,
+    cm: 10,
+    m: 1000,
+    km: 1000000
+  };
+
+  function randomChoice(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function generateProblem(difficulty) {
+    if (difficulty === "random") {
+      const r = Math.random();
+      if (r < 0.25) difficulty = "easy";
+      else if (r < 0.65) difficulty = "medium";
+      else difficulty = "hard";
+    }
+
+    if (difficulty === "easy") {
+      return generateEasyProblem();
+    } else if (difficulty === "medium") {
+      return generateMediumProblem();
+    } else {
+      return generateHardProblem();
+    }
+  }
+
+  // Easy: same units, whole numbers, simple scale
+  function generateEasyProblem() {
+    const types = ["diagramToReal", "realToDiagram"];
+    const type = randomChoice(types);
+    const isReduction = Math.random() < 0.65;
+    const unit = randomChoice(["cm", "mm", "m"]);
+    let scaleNum, scaleDen;
+
+    if (isReduction) {
+      scaleNum = 1;
+      scaleDen = randomChoice([2, 5, 10, 20, 50, 100, 200, 500, 1000]);
+    } else {
+      scaleNum = randomChoice([2, 3, 4, 5]);
+      scaleDen = 1;
+    }
+
+    let givenValue, answerValue;
+    if (type === "diagramToReal") {
+      // drawing length known -> real length
+      if (isReduction) {
+        const k = randomInt(2, 20);
+        givenValue = k;
+        answerValue = k * scaleDen;
+      } else {
+        const k = randomInt(2, 20);
+        givenValue = k;
+        answerValue = Math.round(k / scaleNum);
+        // ensure integer
+        givenValue = answerValue * scaleNum;
+      }
+    } else {
+      // realToDiagram
+      if (isReduction) {
+        const k = randomInt(2, 20);
+        answerValue = k;
+        givenValue = k * scaleDen;
+      } else {
+        const k = randomInt(2, 20);
+        answerValue = k;
+        givenValue = k * scaleNum;
+      }
+    }
+
+    const context = randomChoice([
+      "a simple map",
+      "a small diagram",
+      "a scale drawing",
+      "a picture"
+    ]);
+
+    let text, meta, typeLabel;
+    if (type === "diagramToReal") {
+      typeLabel = "Diagram → real distance (no unit conversion)";
+      text = "On " + context + ", the distance between two points is " +
+        formatNumber(givenValue, 0) + " " + unit + ". " +
+        "Use the scale to find the real distance.";
+      meta = "Give your answer as a whole number in " + unit + ".";
+    } else {
+      typeLabel = "Real → diagram distance (no unit conversion)";
+      text = "In real life, an object is " +
+        formatNumber(givenValue, 0) + " " + unit + " long. " +
+        "It is drawn using the scale shown. Find the length in the drawing.";
+      meta = "Give your answer as a whole number in " + unit + ".";
+    }
+
+    const scaleStr = "Scale: " + scaleNum + " : " + scaleDen;
+    const explanation = buildStepsExplanation({
+      type,
+      context,
+      unitDiagram: unit,
+      unitReal: unit,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      askUnit: unit
+    });
+
+    return {
+      difficulty: "easy",
+      type,
+      context,
+      unitDiagram: unit,
+      unitReal: unit,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      answerUnit: unit,
+      questionTypeLabel: typeLabel,
+      questionText: text,
+      questionMeta: meta,
+      scaleLine: scaleStr,
+      explanationHtml: explanation,
+      decimals: 0
+    };
+  }
+
+  // Medium: mm<->cm, cm<->m, moderate scales, decimals possible
+  function generateMediumProblem() {
+    const types = ["diagramToReal", "realToDiagram"];
+    const type = randomChoice(types);
+    const variant = randomChoice(["map_cm_to_m", "real_mm_to_cm_blueprint", "photo_scale"]);
+    let scaleNum, scaleDen;
+    let unitDiagram, unitReal;
+    let givenValue, answerValue;
+    let context, typeLabel, text, meta;
+
+    if (variant === "map_cm_to_m") {
+      // Map: 1:X, diagram in cm, real in m
+      context = "a map";
+      scaleNum = 1;
+      scaleDen = randomChoice([500, 1000, 2000, 5000]);
+      unitDiagram = "cm";
+      unitReal = "m";
+
+      if (type === "diagramToReal") {
+        typeLabel = "Diagram → real distance (cm to m)";
+        const baseCm = randomChoice([1.6, 2.3, 3.2, 4.8, 5.5, 6.4]);
+        givenValue = baseCm;
+        // real cm = given * scaleDen; real m = /100
+        const realCm = givenValue * scaleDen;
+        answerValue = realCm / 100;
+        text = "A map has a scale of 1 : " + formatNumber(scaleDen, 0) +
+          ". The distance between two places on the map is " +
+          formatNumber(givenValue, 1) + " cm. Find the real distance.";
+        meta = "Give your answer in meters (m).";
+      } else {
+        typeLabel = "Real → diagram distance (m to cm)";
+        const baseM = randomChoice([60, 120, 240, 350, 480, 520]); // in meters
+        givenValue = baseM;
+        // real cm = m * 100; diagram cm = real cm / scaleDen
+        const realCm = givenValue * 100;
+        answerValue = realCm / scaleDen;
+        text = "A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
+          ". The real distance between two towns is " +
+          formatNumber(givenValue, 0) + " m. How far apart are they on the map?";
+        meta = "Give your answer in centimeters (cm).";
+      }
+    } else if (variant === "real_mm_to_cm_blueprint") {
+      // Blueprint: 2:1, 3:1 style, mm <-> cm
+      context = "a technical drawing";
+      const enlargementScales = [
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1]
+      ];
+      const sc = randomChoice(enlargementScales);
+      scaleNum = sc[0];
+      scaleDen = sc[1];
+      unitDiagram = "cm";
+      unitReal = "mm";
+
+      if (type === "diagramToReal") {
+        typeLabel = "Diagram → real length (cm to mm)";
+        const baseCm = randomChoice([4, 5.5, 7.2, 8, 9.5, 10.4]);
+        givenValue = baseCm;
+        // real mm = (diagram cm / scaleNum * scaleDen) * 10
+        const realCm = (givenValue * scaleDen) / scaleNum;
+        answerValue = realCm * 10;
+        text = "A part is drawn in " + context + " using the scale " +
+          formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0) +
+          ". On the drawing, the part is " + formatNumber(givenValue, 1) +
+          " cm long. Find its real length.";
+        meta = "Give your answer in millimeters (mm).";
+      } else {
+        typeLabel = "Real → diagram length (mm to cm)";
+        const baseMm = randomChoice([36, 48, 72, 85, 96, 110]); // real mm
+        givenValue = baseMm;
+        const realCm = givenValue / 10;
+        const diagramCm = (realCm * scaleNum) / scaleDen;
+        answerValue = diagramCm;
+        text = "A machine part is " + formatNumber(givenValue, 0) +
+          " mm long in real life. It is drawn in " + context +
+          " using a scale of " + formatNumber(scaleNum, 0) +
+          " : " + formatNumber(scaleDen, 0) + ". Find its length on the drawing.";
+        meta = "Give your answer in centimeters (cm).";
+      }
+    } else {
+      // photo_scale
+      context = "an enlarged photograph";
+      const scales = [
+        [5, 2],
+        [3, 2],
+        [4, 3]
+      ];
+      const sc = randomChoice(scales);
+      scaleNum = sc[0];
+      scaleDen = sc[1];
+      unitDiagram = "cm";
+      unitReal = "cm";
+
+      if (type === "diagramToReal") {
+        typeLabel = "Diagram → real length (enlarged photo)";
+        const baseDiagram = randomChoice([8.4, 10.5, 12.6, 15.2]);
+        givenValue = baseDiagram;
+        const realLen = givenValue * scaleDen / scaleNum;
+        answerValue = realLen;
+        text = "An object appears in " + context + " using a scale of " +
+          formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0) +
+          ". On the photograph, it is " + formatNumber(givenValue, 1) +
+          " cm long. Find its real length.";
+        meta = "Give your answer in centimeters (cm). Decimals are allowed.";
+      } else {
+        typeLabel = "Real → diagram length (enlarged photo)";
+        const baseReal = randomChoice([4.2, 5.6, 6.8, 7.5]);
+        givenValue = baseReal;
+        const diagramLen = givenValue * scaleNum / scaleDen;
+        answerValue = diagramLen;
+        text = "An object is " + formatNumber(givenValue, 1) +
+          " cm long in real life. In " + context +
+          ", it is shown using the scale " + formatNumber(scaleNum, 0) +
+          " : " + formatNumber(scaleDen, 0) +
+          ". Find its length on the photograph.";
+        meta = "Give your answer in centimeters (cm). Decimals are allowed.";
+      }
+    }
+
+    const scaleStr = "Scale: " + formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0);
+
+    const explanation = buildStepsExplanation({
+      type,
+      context,
+      unitDiagram,
+      unitReal,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      askUnit: (type === "diagramToReal" ? unitReal : unitDiagram)
+    });
+
+    const decimals = (variant === "map_cm_to_m" ? 0 : 2);
+
+    return {
+      difficulty: "medium",
+      type,
+      context,
+      unitDiagram,
+      unitReal,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      answerUnit: (type === "diagramToReal" ? unitReal : unitDiagram),
+      questionTypeLabel: typeLabel,
+      questionText: text,
+      questionMeta: meta,
+      scaleLine: scaleStr,
+      explanationHtml: explanation,
+      decimals
+    };
+  }
+
+  // Hard: big map scales, km, mixed conversions, decimals
+  function generateHardProblem() {
+    const types = ["diagramToReal", "realToDiagram"];
+    const type = randomChoice(types);
+    const variant = randomChoice(["map_cm_to_km", "blueprint_cm_mm", "drawing_m_to_cm"]);
+    let scaleNum, scaleDen;
+    let unitDiagram, unitReal;
+    let givenValue, answerValue;
+    let context, typeLabel, text, meta;
+
+    if (variant === "map_cm_to_km") {
+      context = "a detailed map";
+      scaleNum = 1;
+      scaleDen = randomChoice([20000, 25000, 50000, 100000]);
+      unitDiagram = "cm";
+      unitReal = "km";
+
+      if (type === "diagramToReal") {
+        typeLabel = "Diagram → real distance (cm to km)";
+        const baseCm = randomChoice([4.6, 5.2, 6.8, 7.3, 8.1]);
+        givenValue = baseCm;
+        const realCm = givenValue * scaleDen;
+        const realKm = realCm / 100000;
+        answerValue = realKm;
+        text = "A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
+          ". The distance between two villages on the map is " +
+          formatNumber(givenValue, 1) + " cm. Find the real distance.";
+        meta = "Give your answer in kilometers (km). Decimals are allowed.";
+      } else {
+        typeLabel = "Real → diagram distance (km to cm)";
+        const baseKm = randomChoice([1.2, 2.4, 3.6, 4.5, 5.75]);
+        givenValue = baseKm;
+        const realCm = baseKm * 100000;
+        const diagramCm = realCm / scaleDen;
+        answerValue = diagramCm;
+        text = "The real distance between two cities is " +
+          formatNumber(givenValue, 2) +
+          " km. A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
+          ". How far apart are the cities on the map?";
+        meta = "Give your answer in centimeters (cm). Decimals are allowed.";
+      }
+    } else if (variant === "blueprint_cm_mm") {
+      context = "a building plan";
+      const sc = randomChoice([[3,50], [2,25], [1,20]]);
+      scaleNum = sc[0];
+      scaleDen = sc[1];
+      unitDiagram = "cm";
+      unitReal = "m";
+
+      if (type === "diagramToReal") {
+        typeLabel = "Diagram → real length (cm to m)";
+        const baseCm = randomChoice([12.5, 18.4, 22.6, 30.0]);
+        givenValue = baseCm;
+        // scaleNum : scaleDen -> diagram : real in same unit
+        // real cm = given * scaleDen / scaleNum
+        const realCm = givenValue * scaleDen / scaleNum;
+        const realM = realCm / 100;
+        answerValue = realM;
+        text = "A wall is drawn in " + context + " using a scale of " +
+          formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0) +
+          ". On the drawing, the wall is " + formatNumber(givenValue, 1) +
+          " cm long. Find its real length.";
+        meta = "Give your answer in meters (m). Decimals are allowed.";
+      } else {
+        typeLabel = "Real → diagram length (m to cm)";
+        const baseM = randomChoice([3.2, 4.5, 5.8, 6.4, 7.25]);
+        givenValue = baseM;
+        const realCm = baseM * 100;
+        const diagramCm = realCm * scaleNum / scaleDen;
+        answerValue = diagramCm;
+        text = "A beam is " + formatNumber(givenValue, 2) +
+          " m long in real life. It is drawn on " + context +
+          " using a scale of " + formatNumber(scaleNum, 0) +
+          " : " + formatNumber(scaleDen, 0) + ". Find its length on the plan.";
+        meta = "Give your answer in centimeters (cm). Decimals are allowed.";
+      }
+    } else {
+      // drawing_m_to_cm: maybe 1:2.5 scale etc
+      context = "a scale drawing";
+      scaleNum = 1;
+      scaleDen = 2.5;
+      unitDiagram = "cm";
+      unitReal = "m";
+
+      if (type === "diagramToReal") {
+        typeLabel = "Diagram → real length (cm to m, fractional scale)";
+        const baseDiagram = randomChoice([10.8, 15.5, 18.4, 22.0]);
+        givenValue = baseDiagram;
+        const realCm = givenValue * scaleDen;
+        const realM = realCm / 100;
+        answerValue = realM;
+        text = "A scale drawing is made using a scale of 1 : 2.5. " +
+          "On the drawing, a metal bar is " + formatNumber(givenValue, 1) +
+          " cm long. Find its real length.";
+        meta = "Give your answer in meters (m). Decimals are allowed.";
+      } else {
+        typeLabel = "Real → diagram length (m to cm, fractional scale)";
+        const baseM = randomChoice([1.8, 2.4, 3.6, 4.1]);
+        givenValue = baseM;
+        const realCm = baseM * 100;
+        const diagramCm = realCm / scaleDen;
+        answerValue = diagramCm;
+        text = "A metal bar is " + formatNumber(givenValue, 1) +
+          " m long in real life. It is drawn using a scale of 1 : 2.5. " +
+          "Find its length on the drawing.";
+        meta = "Give your answer in centimeters (cm). Decimals are allowed.";
+      }
+    }
+
+    const scaleStr = "Scale: " + formatNumber(scaleNum, 2) + " : " + formatNumber(scaleDen, 0);
+
+    const explanation = buildStepsExplanation({
+      type,
+      context,
+      unitDiagram,
+      unitReal,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      askUnit: (type === "diagramToReal" ? unitReal : unitDiagram)
+    });
+
+    return {
+      difficulty: "hard",
+      type,
+      context,
+      unitDiagram,
+      unitReal,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      answerUnit: (type === "diagramToReal" ? unitReal : unitDiagram),
+      questionTypeLabel: typeLabel,
+      questionText: text,
+      questionMeta: meta,
+      scaleLine: scaleStr,
+      explanationHtml: explanation,
+      decimals: 2
+    };
+  }
+
+  function buildStepsExplanation(info) {
+    const {
+      type,
+      context,
+      unitDiagram,
+      unitReal,
+      scaleNum,
+      scaleDen,
+      givenValue,
+      answerValue,
+      askUnit
+    } = info;
+
+    let html = "<strong>Steps:</strong><br>";
+    const scaleStr = scaleNum + " : " + scaleDen;
+
+    html += "1. Use the scale " + scaleStr + " to relate the diagram and real lengths.<br>";
+
+    if (unitDiagram !== unitReal) {
+      html += "2. Convert units if needed so you can use the scale correctly.<br>";
+    }
+
+    if (type === "diagramToReal") {
+      html += "3. The given value is from the " + (unitDiagram === unitReal ? "diagram" : "diagram side") +
+        ": " + formatNumber(givenValue, (Number.isInteger(givenValue)?0:2)) + " " + unitDiagram + ".<br>";
+      if (scaleNum === 1) {
+        html += "4. For a scale of 1 : " + scaleDen +
+          ", multiply the diagram length by " + scaleDen + " to get the real length (in the same base unit).<br>";
+      } else {
+        html += "4. For a scale of " + scaleNum + " : " + scaleDen +
+          ", multiply or divide to move from the diagram length to the real length using the factor " +
+          "(real / diagram) = " + scaleDen + " / " + scaleNum + ".<br>";
+      }
+    } else {
+      html += "3. The given value is from the real object: " +
+        formatNumber(givenValue, (Number.isInteger(givenValue)?0:2)) + " " + unitReal + ".<br>";
+      if (scaleNum === 1) {
+        html += "4. For a scale of 1 : " + scaleDen +
+          ", divide the real length by " + scaleDen + " to get the diagram length (in the same base unit).<br>";
+      } else {
+        html += "4. For a scale of " + scaleNum + " : " + scaleDen +
+          ", multiply or divide to move from the real length to the diagram length using the factor " +
+          "(diagram / real) = " + scaleNum + " / " + scaleDen + ".<br>";
+      }
+    }
+
+    html += "5. Finally, convert the result into the requested unit (" + askUnit + ") if needed.<br>";
+    html += "6. Answer: " + formatNumber(answerValue, 3) + " " + askUnit + ".";
+
+    return html;
+  }
+
+  // ---------- Game logic ----------
+  function loadProblem(problem) {
+    gameState.currentProblem = problem;
+    gameState.mode = "awaitingAnswer";
+
+    questionTypeLabel.textContent = problem.questionTypeLabel;
+    questionText.textContent = problem.questionText;
+    questionMeta.textContent = problem.questionMeta;
+    scaleLine.textContent = problem.scaleLine;
+
+    answerInput.value = "";
+    answerInput.disabled = false;
+    answerInput.focus();
+    answerUnitLabel.textContent = problem.answerUnit;
+    feedbackMessage.textContent = "";
+    feedbackMessage.className = "feedback-message";
+    stepsPanel.style.display = "none";
+    stepsPanel.innerHTML = "";
+    btnSubmit.disabled = false;
+    btnSubmitLabel.textContent = "Submit";
+    btnNext.disabled = true;
+    btnShowSteps.disabled = true;
+
+    startTimer();
+  }
+
+  function newQuestion() {
+    stopTimer();
+    const prob = generateProblem(currentDifficulty);
+    loadProblem(prob);
+  }
+
+  function updateStats() {
+    statTotal.textContent = "Total: " + gameState.total;
+    statCorrect.textContent = "Correct: " + gameState.correct;
+    const acc = gameState.total === 0 ? 0 : Math.round((gameState.correct / gameState.total) * 100);
+    statAccuracy.textContent = "Accuracy: " + acc + "%";
+    statScore.textContent = "Score: " + gameState.score;
+    statStreak.textContent = "Streak: " + gameState.streak;
+    statBestStreak.textContent = "Best streak: " + gameState.bestStreak;
+
+    if (gameState.incorrectQuestions.length === 0) {
+      incorrectSummary.textContent = "No incorrect answers yet.";
+    } else {
+      const lines = gameState.incorrectQuestions.map((item, idx) => {
+        return "<div class=\"incorrect-item\">" +
+          (idx + 1) + ". " + item.text +
+          " <br>Correct answer: " + formatNumber(item.correctAnswer, 3) + " " + item.unit +
+          "</div>";
+      });
+      incorrectSummary.innerHTML = lines.join("");
+    }
+  }
+
+  function addHistoryEntry(correct, timedOut) {
+    const prob = gameState.currentProblem;
+    if (!prob) return;
+    const label = prob.difficulty.toUpperCase() + " – " +
+      (prob.type === "diagramToReal" ? "D→R" : "R→D");
+    const entry = {
+      label,
+      correct,
+      timedOut
+    };
+    gameState.history.unshift(entry);
+    if (gameState.history.length > 40) {
+      gameState.history.pop();
+    }
+    const frag = document.createDocumentFragment();
+    historyPanel.innerHTML = "";
+    gameState.history.forEach(h => {
+      const div = document.createElement("div");
+      div.className = "history-entry";
+      const spanLabel = document.createElement("span");
+      spanLabel.className = "label";
+      spanLabel.textContent = h.label;
+      const spanResult = document.createElement("span");
+      spanResult.className = h.correct ? "result-c" : "result-i";
+      spanResult.textContent = h.timedOut ? (h.correct ? "Correct (timer)" : "Time up") : (h.correct ? "Correct" : "Incorrect");
+      div.appendChild(spanLabel);
+      div.appendChild(spanResult);
+      frag.appendChild(div);
+    });
+    historyPanel.appendChild(frag);
+  }
+
+  function handleSubmit() {
+    if (gameState.mode === "awaitingNext") {
+      // Enter pressed when in awaitingNext handled separately via keyboard; here only button click
+      return;
+    }
+    const prob = gameState.currentProblem;
+    if (!prob) return;
+    const raw = answerInput.value;
+    const num = parseUserNumber(raw);
+    if (!isFinite(num)) {
+      feedbackMessage.textContent = "Please enter a valid number.";
+      feedbackMessage.className = "feedback-message incorrect";
+      playIncorrectSound();
+      return;
+    }
+
+    const correctVal = prob.answerValue;
+    const correct = approxEqual(num, correctVal, 0.005, 0.001);
+
+    gameState.total += 1;
+    if (correct) {
+      feedbackMessage.textContent = "Correct!";
+      feedbackMessage.className = "feedback-message correct";
+      gameState.correct += 1;
+      gameState.streak += 1;
+      if (gameState.streak > gameState.bestStreak) {
+        gameState.bestStreak = gameState.streak;
+      }
+      let points = 10;
+      if (gameState.streak > 0 && gameState.streak % 5 === 0) {
+        points += 5;
+      }
+      gameState.score += points;
+      btnShowSteps.disabled = false; // allow them to review steps if they want
+      btnNext.disabled = false;
+      btnSubmit.disabled = true;
+      btnSubmitLabel.textContent = "Submit";
+      gameState.mode = "awaitingNext";
+      stopTimer();
+      playCorrectSound();
+      addHistoryEntry(true, false);
+    } else {
+      feedbackMessage.textContent = "Incorrect. You can try again or tap 'Show steps'.";
+      feedbackMessage.className = "feedback-message incorrect";
+      playIncorrectSound();
+      gameState.streak = 0;
+      btnShowSteps.disabled = false;
+      btnNext.disabled = false;
+      // Count incorrect question for summary only on first wrong attempt for this problem
+      const alreadyRecorded = gameState.incorrectQuestions.some(q => q.id === prob._id);
+      if (!alreadyRecorded) {
+        gameState.incorrectQuestions.push({
+          id: prob._id,
+          text: prob.questionText,
+          correctAnswer: prob.answerValue,
+          unit: prob.answerUnit
+        });
+      }
+      addHistoryEntry(false, false);
+    }
+    updateStats();
+  }
+
+  btnSubmit.addEventListener("click", handleSubmit);
+
+  btnNext.addEventListener("click", () => {
+    if (gameState.mode === "awaitingNext" || gameState.mode === "awaitingAnswer") {
+      newQuestion();
+    }
+  });
+
+  btnShowSteps.addEventListener("click", () => {
+    const prob = gameState.currentProblem;
+    if (!prob) return;
+    stepsPanel.innerHTML = prob.explanationHtml;
+    stepsPanel.style.display = "block";
+  });
+
+  // Keyboard shortcuts
+  answerInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (gameState.mode === "awaitingAnswer") {
+        e.preventDefault();
+        handleSubmit();
+      } else if (gameState.mode === "awaitingNext") {
+        e.preventDefault();
+        newQuestion();
+      }
+    } else if (e.key === "Escape") {
+      if (gameState.mode === "awaitingAnswer") {
+        answerInput.value = "";
+      }
+    }
+  });
+
+  // ---------- Worksheet mode ----------
+  function generateWorksheet() {
+    const count = parseInt(wsCountSelect.value, 10) || 5;
+    worksheetBody.innerHTML = "";
+    const problems = [];
+    for (let i = 0; i < count; i++) {
+      problems.push(generateProblem(currentWsDifficulty));
+    }
+    problems.forEach((prob, idx) => {
+      const tr = document.createElement("tr");
+
+      const tdIndex = document.createElement("td");
+      tdIndex.textContent = (idx + 1);
+
+      const tdQuestion = document.createElement("td");
+      const qText = document.createElement("div");
+      qText.textContent = prob.questionText;
+      const qScale = document.createElement("div");
+      qScale.textContent = prob.scaleLine;
+      qScale.style.fontSize = "0.85rem";
+      qScale.style.opacity = "0.8";
+      tdQuestion.appendChild(qText);
+      tdQuestion.appendChild(qScale);
+
+      const tdAnswer = document.createElement("td");
+      tdAnswer.className = "worksheet-answer";
+      const spanAnswer = document.createElement("span");
+      spanAnswer.className = "hidden-answer";
+      spanAnswer.textContent = formatNumber(prob.answerValue, 3) + " " + prob.answerUnit;
+      tdAnswer.appendChild(spanAnswer);
+
+      const tdReveal = document.createElement("td");
+      const btnRev = document.createElement("button");
+      btnRev.textContent = "Reveal";
+      btnRev.className = "secondary-btn";
+      btnRev.addEventListener("click", () => {
+        const hidden = spanAnswer.classList.contains("hidden-answer");
+        if (hidden) {
+          spanAnswer.classList.remove("hidden-answer");
+          btnRev.textContent = "Hide";
+        } else {
+          spanAnswer.classList.add("hidden-answer");
+          btnRev.textContent = "Reveal";
+        }
+      });
+      tdReveal.appendChild(btnRev);
+
+      tr.appendChild(tdIndex);
+      tr.appendChild(tdQuestion);
+      tr.appendChild(tdAnswer);
+      tr.appendChild(tdReveal);
+
+      worksheetBody.appendChild(tr);
+    });
+
+    btnRevealAll.disabled = false;
+    btnHideAll.disabled = false;
+  }
+
+  btnGenerateWorksheet.addEventListener("click", generateWorksheet);
+
+  btnRevealAll.addEventListener("click", () => {
+    const answers = worksheetBody.querySelectorAll(".worksheet-answer span");
+    answers.forEach(span => span.classList.remove("hidden-answer"));
+    const buttons = worksheetBody.querySelectorAll("td:last-child button");
+    buttons.forEach(btn => btn.textContent = "Hide");
+  });
+
+  btnHideAll.addEventListener("click", () => {
+    const answers = worksheetBody.querySelectorAll(".worksheet-answer span");
+    answers.forEach(span => span.classList.add("hidden-answer"));
+    const buttons = worksheetBody.querySelectorAll("td:last-child button");
+    buttons.forEach(btn => btn.textContent = "Reveal");
+  });
+
+  // ---------- Developer tests ----------
+  function runDevTests() {
+    const messages = [];
+    function assert(name, cond) {
+      messages.push((cond ? "✔ " : "✖ ") + name);
+    }
+
+    // 1: Easy problems have no decimals, same units
+    for (let i = 0; i < 10; i++) {
+      const p = generateEasyProblem();
+      assert("Easy has integer answer", Number.isInteger(p.answerValue));
+      assert("Easy unitDiagram == unitReal", p.unitDiagram === p.unitReal);
+    }
+
+    // 2: Medium allows decimals and conversions
+    let hasDecimalMedium = false;
+    for (let i = 0; i < 10; i++) {
+      const p = generateMediumProblem();
+      if (!Number.isInteger(p.answerValue)) hasDecimalMedium = true;
+    }
+    assert("Medium sometimes has decimal answers", hasDecimalMedium);
+
+    // 3: Hard problems use km or mixed scales occasionally
+    let hasKm = false;
+    let hasBigScale = false;
+    for (let i = 0; i < 20; i++) {
+      const p = generateHardProblem();
+      if (p.answerUnit === "km") hasKm = true;
+      if (typeof p.scaleDen === "number" && p.scaleDen >= 20000) hasBigScale = true;
+    }
+    assert("Hard sometimes uses km", hasKm);
+    assert("Hard sometimes uses big map scales", hasBigScale);
+
+    // 4: Parsing user numbers with spaces and comma
+    assert("parseUserNumber handles spaces", parseUserNumber("1 234") === 1234);
+    assert("parseUserNumber handles comma", parseUserNumber("3,5") === 3.5);
+
+    // 5: approxEqual works for close decimals
+    assert("approxEqual close decimals", approxEqual(1.234, 1.235, 0.01, 0.001));
+
+    // 6: Formatting adds spaces
+    assert("formatNumber adds spaces", formatNumber(12345, 0) === "12 345");
+
+    // 7: Random difficulty distribution works
+    let gotEasy = false, gotMed = false, gotHard = false;
+    for (let i = 0; i < 20; i++) {
+      const p = generateProblem("random");
+      if (p.difficulty === "easy") gotEasy = true;
+      if (p.difficulty === "medium") gotMed = true;
+      if (p.difficulty === "hard") gotHard = true;
+    }
+    assert("Random produces easy", gotEasy);
+    assert("Random produces medium", gotMed);
+    assert("Random produces hard", gotHard);
+
+    // 8: New problems are not identical for several draws
+    const seen = new Set();
+    let uniqueCount = 0;
+    for (let i = 0; i < 40; i++) {
+      const p = generateProblem("easy");
+      const key = p.questionText + "|" + p.scaleLine;
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueCount++;
+      }
+    }
+    assert("At least 20 unique easy problems out of 40 draws", uniqueCount >= 20);
+
+    // 9: Hard problems have answerValue > 0
+    let allPositive = true;
+    for (let i = 0; i < 20; i++) {
+      const p = generateHardProblem();
+      if (!(p.answerValue > 0)) allPositive = false;
+    }
+    assert("Hard answer values positive", allPositive);
+
+    // 10: Easy problems have no km unit
+    let noKmInEasy = true;
+    for (let i = 0; i < 20; i++) {
+      const p = generateEasyProblem();
+      if (p.answerUnit === "km") noKmInEasy = false;
+    }
+    assert("Easy has no km units", noKmInEasy);
+
+    alert("Dev tests:\n\n" + messages.join("\n"));
+  }
+
+  if (getQueryParam("dev") === "1") {
+    const devBtn = document.createElement("button");
+    devBtn.textContent = "Run Dev Tests";
+    devBtn.className = "secondary-btn";
+    devBtn.style.marginTop = "8px";
+    devBtn.addEventListener("click", runDevTests);
+    document.querySelector(".app").appendChild(devBtn);
+  }
+
+  // ---------- Initialize ----------
+  timerSeconds = 0;
+  setDifficulty("easy");
+  setWorksheetDifficulty("easy");
+  updateStats();
+  setMode("game");
+})();
+</script>
+</body>
+</html>
