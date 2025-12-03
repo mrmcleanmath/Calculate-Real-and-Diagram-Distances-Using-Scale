@@ -857,7 +857,6 @@
   });
 
   // ---------- Problem generation ----------
-  // Units: mm, cm, m, km
   const unitFactors = {
     mm: 1,
     cm: 10,
@@ -894,8 +893,11 @@
   function generateEasyProblem() {
     const types = ["diagramToReal", "realToDiagram"];
     const type = randomChoice(types);
+
+    // FIX: only cm or mm (no m) so map/picture distances are realistic
+    const unit = randomChoice(["cm", "mm"]);
+
     const isReduction = Math.random() < 0.65;
-    const unit = randomChoice(["cm", "mm", "m"]);
     let scaleNum, scaleDen;
 
     if (isReduction) {
@@ -908,7 +910,6 @@
 
     let givenValue, answerValue;
     if (type === "diagramToReal") {
-      // drawing length known -> real length
       if (isReduction) {
         const k = randomInt(2, 20);
         givenValue = k;
@@ -917,11 +918,9 @@
         const k = randomInt(2, 20);
         givenValue = k;
         answerValue = Math.round(k / scaleNum);
-        // ensure integer
         givenValue = answerValue * scaleNum;
       }
     } else {
-      // realToDiagram
       if (isReduction) {
         const k = randomInt(2, 20);
         answerValue = k;
@@ -999,7 +998,6 @@
     let context, typeLabel, text, meta;
 
     if (variant === "map_cm_to_m") {
-      // Map: 1:X, diagram in cm, real in m
       context = "a map";
       scaleNum = 1;
       scaleDen = randomChoice([500, 1000, 2000, 5000]);
@@ -1010,7 +1008,6 @@
         typeLabel = "Diagram → real distance (cm to m)";
         const baseCm = randomChoice([1.6, 2.3, 3.2, 4.8, 5.5, 6.4]);
         givenValue = baseCm;
-        // real cm = given * scaleDen; real m = /100
         const realCm = givenValue * scaleDen;
         answerValue = realCm / 100;
         text = "A map has a scale of 1 : " + formatNumber(scaleDen, 0) +
@@ -1019,9 +1016,8 @@
         meta = "Give your answer in meters (m).";
       } else {
         typeLabel = "Real → diagram distance (m to cm)";
-        const baseM = randomChoice([60, 120, 240, 350, 480, 520]); // in meters
+        const baseM = randomChoice([60, 120, 240, 350, 480, 520]);
         givenValue = baseM;
-        // real cm = m * 100; diagram cm = real cm / scaleDen
         const realCm = givenValue * 100;
         answerValue = realCm / scaleDen;
         text = "A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
@@ -1030,7 +1026,6 @@
         meta = "Give your answer in centimeters (cm).";
       }
     } else if (variant === "real_mm_to_cm_blueprint") {
-      // Blueprint: 2:1, 3:1 style, mm <-> cm
       context = "a technical drawing";
       const enlargementScales = [
         [2, 1],
@@ -1048,7 +1043,6 @@
         typeLabel = "Diagram → real length (cm to mm)";
         const baseCm = randomChoice([4, 5.5, 7.2, 8, 9.5, 10.4]);
         givenValue = baseCm;
-        // real mm = (diagram cm / scaleNum * scaleDen) * 10
         const realCm = (givenValue * scaleDen) / scaleNum;
         answerValue = realCm * 10;
         text = "A part is drawn in " + context + " using the scale " +
@@ -1058,7 +1052,7 @@
         meta = "Give your answer in millimeters (mm).";
       } else {
         typeLabel = "Real → diagram length (mm to cm)";
-        const baseMm = randomChoice([36, 48, 72, 85, 96, 110]); // real mm
+        const baseMm = randomChoice([36, 48, 72, 85, 96, 110]);
         givenValue = baseMm;
         const realCm = givenValue / 10;
         const diagramCm = (realCm * scaleNum) / scaleDen;
@@ -1070,7 +1064,6 @@
         meta = "Give your answer in centimeters (cm).";
       }
     } else {
-      // photo_scale
       context = "an enlarged photograph";
       const scales = [
         [5, 2],
@@ -1198,8 +1191,6 @@
         typeLabel = "Diagram → real length (cm to m)";
         const baseCm = randomChoice([12.5, 18.4, 22.6, 30.0]);
         givenValue = baseCm;
-        // scaleNum : scaleDen -> diagram : real in same unit
-        // real cm = given * scaleDen / scaleNum
         const realCm = givenValue * scaleDen / scaleNum;
         const realM = realCm / 100;
         answerValue = realM;
@@ -1222,7 +1213,6 @@
         meta = "Give your answer in centimeters (cm). Decimals are allowed.";
       }
     } else {
-      // drawing_m_to_cm: maybe 1:2.5 scale etc
       context = "a scale drawing";
       scaleNum = 1;
       scaleDen = 2.5;
@@ -1428,7 +1418,6 @@
 
   function handleSubmit() {
     if (gameState.mode === "awaitingNext") {
-      // Enter pressed when in awaitingNext handled separately via keyboard; here only button click
       return;
     }
     const prob = gameState.currentProblem;
@@ -1459,7 +1448,7 @@
         points += 5;
       }
       gameState.score += points;
-      btnShowSteps.disabled = false; // allow them to review steps if they want
+      btnShowSteps.disabled = false;
       btnNext.disabled = false;
       btnSubmit.disabled = true;
       btnSubmitLabel.textContent = "Submit";
@@ -1474,11 +1463,9 @@
       gameState.streak = 0;
       btnShowSteps.disabled = false;
       btnNext.disabled = false;
-      // Count incorrect question for summary only on first wrong attempt for this problem
-      const alreadyRecorded = gameState.incorrectQuestions.some(q => q.id === prob._id);
+      const alreadyRecorded = gameState.incorrectQuestions.some(q => q.text === prob.questionText && q.unit === prob.answerUnit);
       if (!alreadyRecorded) {
         gameState.incorrectQuestions.push({
-          id: prob._id,
           text: prob.questionText,
           correctAnswer: prob.answerValue,
           unit: prob.answerUnit
@@ -1504,7 +1491,6 @@
     stepsPanel.style.display = "block";
   });
 
-  // Keyboard shortcuts
   answerInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       if (gameState.mode === "awaitingAnswer") {
@@ -1521,14 +1507,26 @@
     }
   });
 
-  // ---------- Worksheet mode ----------
+  // ---------- Worksheet mode (with no duplicates) ----------
   function generateWorksheet() {
     const count = parseInt(wsCountSelect.value, 10) || 5;
     worksheetBody.innerHTML = "";
+
     const problems = [];
-    for (let i = 0; i < count; i++) {
-      problems.push(generateProblem(currentWsDifficulty));
+    const usedKeys = new Set();
+    let safety = 0;
+    const maxTries = count * 50; // plenty of room for variety
+
+    while (problems.length < count && safety < maxTries) {
+      const prob = generateProblem(currentWsDifficulty);
+      const key = prob.questionText + "|" + prob.scaleLine;
+      if (!usedKeys.has(key)) {
+        usedKeys.add(key);
+        problems.push(prob);
+      }
+      safety++;
     }
+
     problems.forEach((prob, idx) => {
       const tr = document.createElement("tr");
 
@@ -1576,8 +1574,8 @@
       worksheetBody.appendChild(tr);
     });
 
-    btnRevealAll.disabled = false;
-    btnHideAll.disabled = false;
+    btnRevealAll.disabled = problems.length === 0;
+    btnHideAll.disabled = problems.length === 0;
   }
 
   btnGenerateWorksheet.addEventListener("click", generateWorksheet);
@@ -1603,14 +1601,13 @@
       messages.push((cond ? "✔ " : "✖ ") + name);
     }
 
-    // 1: Easy problems have no decimals, same units
     for (let i = 0; i < 10; i++) {
       const p = generateEasyProblem();
       assert("Easy has integer answer", Number.isInteger(p.answerValue));
       assert("Easy unitDiagram == unitReal", p.unitDiagram === p.unitReal);
+      assert("Easy unit is cm or mm", p.unitDiagram === "cm" || p.unitDiagram === "mm");
     }
 
-    // 2: Medium allows decimals and conversions
     let hasDecimalMedium = false;
     for (let i = 0; i < 10; i++) {
       const p = generateMediumProblem();
@@ -1618,7 +1615,6 @@
     }
     assert("Medium sometimes has decimal answers", hasDecimalMedium);
 
-    // 3: Hard problems use km or mixed scales occasionally
     let hasKm = false;
     let hasBigScale = false;
     for (let i = 0; i < 20; i++) {
@@ -1629,17 +1625,13 @@
     assert("Hard sometimes uses km", hasKm);
     assert("Hard sometimes uses big map scales", hasBigScale);
 
-    // 4: Parsing user numbers with spaces and comma
     assert("parseUserNumber handles spaces", parseUserNumber("1 234") === 1234);
     assert("parseUserNumber handles comma", parseUserNumber("3,5") === 3.5);
 
-    // 5: approxEqual works for close decimals
     assert("approxEqual close decimals", approxEqual(1.234, 1.235, 0.01, 0.001));
 
-    // 6: Formatting adds spaces
     assert("formatNumber adds spaces", formatNumber(12345, 0) === "12 345");
 
-    // 7: Random difficulty distribution works
     let gotEasy = false, gotMed = false, gotHard = false;
     for (let i = 0; i < 20; i++) {
       const p = generateProblem("random");
@@ -1651,7 +1643,6 @@
     assert("Random produces medium", gotMed);
     assert("Random produces hard", gotHard);
 
-    // 8: New problems are not identical for several draws
     const seen = new Set();
     let uniqueCount = 0;
     for (let i = 0; i < 40; i++) {
@@ -1664,7 +1655,6 @@
     }
     assert("At least 20 unique easy problems out of 40 draws", uniqueCount >= 20);
 
-    // 9: Hard problems have answerValue > 0
     let allPositive = true;
     for (let i = 0; i < 20; i++) {
       const p = generateHardProblem();
@@ -1672,7 +1662,6 @@
     }
     assert("Hard answer values positive", allPositive);
 
-    // 10: Easy problems have no km unit
     let noKmInEasy = true;
     for (let i = 0; i < 20; i++) {
       const p = generateEasyProblem();
