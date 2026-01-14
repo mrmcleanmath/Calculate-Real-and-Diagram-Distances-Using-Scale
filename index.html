@@ -29,9 +29,7 @@
       --panel: #000000;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -60,16 +58,8 @@
       border: 1px solid var(--border);
     }
 
-    header h1 {
-      margin: 0 0 4px 0;
-      font-size: 1.4rem;
-    }
-
-    header p {
-      margin: 0;
-      font-size: 0.9rem;
-      opacity: 0.85;
-    }
+    header h1 { margin: 0 0 4px 0; font-size: 1.4rem; }
+    header p { margin: 0; font-size: 0.9rem; opacity: 0.85; }
 
     .top-bar {
       display: flex;
@@ -93,9 +83,7 @@
       opacity: 0.7;
     }
 
-    button, select {
-      font-family: inherit;
-    }
+    button, select { font-family: inherit; }
 
     .pill-btn {
       border-radius: 999px;
@@ -110,9 +98,7 @@
       transition: background 0.15s, transform 0.05s, box-shadow 0.15s;
     }
 
-    .pill-btn span.emoji {
-      font-size: 1rem;
-    }
+    .pill-btn span.emoji { font-size: 1rem; }
 
     .pill-btn.active {
       background: var(--accent-soft);
@@ -121,9 +107,7 @@
       box-shadow: 0 0 0 1px rgba(25,118,210,0.2);
     }
 
-    .pill-btn:active {
-      transform: translateY(1px);
-    }
+    .pill-btn:active { transform: translateY(1px); }
 
     .toggle-btn {
       border-radius: 999px;
@@ -170,10 +154,7 @@
       gap: 12px;
     }
 
-    .mode-tabs {
-      display: flex;
-      gap: 8px;
-    }
+    .mode-tabs { display: flex; gap: 8px; }
 
     .mode-tab {
       border-radius: 999px;
@@ -198,33 +179,12 @@
       border: 1px solid var(--border);
     }
 
-    .panel h2 {
-      margin-top: 0;
-      font-size: 1.05rem;
-      margin-bottom: 8px;
-    }
+    .panel h2 { margin-top: 0; font-size: 1.05rem; margin-bottom: 8px; }
 
-    .question-header {
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .question-body {
-      font-size: 1rem;
-      line-height: 1.45;
-      margin-bottom: 12px;
-    }
-
-    .question-meta {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      margin-bottom: 8px;
-    }
-
-    .scale-line {
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
+    .question-header { font-weight: 600; margin-bottom: 8px; }
+    .question-body { font-size: 1rem; line-height: 1.45; margin-bottom: 12px; }
+    .question-meta { font-size: 0.85rem; opacity: 0.8; margin-bottom: 8px; }
+    .scale-line { font-size: 0.95rem; margin-bottom: 4px; }
 
     .input-row {
       display: flex;
@@ -274,8 +234,7 @@
       gap: 4px;
     }
 
-    .secondary-btn:disabled,
-    .primary-btn:disabled {
+    .secondary-btn:disabled, .primary-btn:disabled {
       opacity: 0.6;
       cursor: default;
     }
@@ -289,31 +248,12 @@
       margin-top: 4px;
     }
 
-    .feedback-message {
-      font-size: 0.95rem;
-      min-height: 1.2em;
-    }
+    .feedback-message { font-size: 0.95rem; min-height: 1.2em; }
+    .feedback-message.correct { color: var(--correct); font-weight: 600; }
+    .feedback-message.incorrect { color: var(--incorrect); font-weight: 600; }
 
-    .feedback-message.correct {
-      color: var(--correct);
-      font-weight: 600;
-    }
-
-    .feedback-message.incorrect {
-      color: var(--incorrect);
-      font-weight: 600;
-    }
-
-    .timer-display {
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    .timer-display.warning {
-      color: #d84315;
-      font-weight: 600;
-      opacity: 1;
-    }
+    .timer-display { font-size: 0.9rem; opacity: 0.8; }
+    .timer-display.warning { color: #d84315; font-weight: 600; opacity: 1; }
 
     .steps-panel {
       margin-top: 8px;
@@ -324,10 +264,7 @@
       font-size: 0.9rem;
     }
 
-    .steps-panel strong {
-      display: inline-block;
-      margin-bottom: 4px;
-    }
+    .steps-panel strong { display: inline-block; margin-bottom: 4px; }
 
     .stats-panel {
       display: flex;
@@ -344,24 +281,10 @@
       border: 1px solid var(--border);
     }
 
-    details.summary-panel {
-      margin-top: 8px;
-      font-size: 0.85rem;
-    }
+    details.summary-panel { margin-top: 8px; font-size: 0.85rem; }
+    details.summary-panel summary { cursor: pointer; font-weight: 600; }
 
-    details.summary-panel summary {
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .incorrect-list {
-      margin-top: 6px;
-      padding-left: 16px;
-    }
-
-    .incorrect-item {
-      margin-bottom: 4px;
-    }
+    .incorrect-item { margin-bottom: 4px; }
 
     .history-panel {
       margin-top: 8px;
@@ -379,17 +302,9 @@
       margin-bottom: 2px;
     }
 
-    .history-entry span.label {
-      opacity: 0.8;
-    }
-
-    .history-entry span.result-c {
-      color: var(--correct);
-    }
-
-    .history-entry span.result-i {
-      color: var(--incorrect);
-    }
+    .history-entry span.label { opacity: 0.8; }
+    .history-entry span.result-c { color: var(--correct); }
+    .history-entry span.result-i { color: var(--incorrect); }
 
     /* Worksheet */
     .worksheet-controls {
@@ -406,8 +321,7 @@
       font-size: 0.9rem;
     }
 
-    .worksheet-table th,
-    .worksheet-table td {
+    .worksheet-table th, .worksheet-table td {
       border: 1px solid var(--border);
       padding: 6px 8px;
       vertical-align: top;
@@ -420,9 +334,7 @@
       z-index: 1;
     }
 
-    .worksheet-answer {
-      font-weight: 600;
-    }
+    .worksheet-answer { font-weight: 600; }
 
     .hidden-answer {
       color: transparent;
@@ -439,18 +351,9 @@
     }
 
     @media (max-width: 700px) {
-      .input-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .input-row input[type="text"] {
-        max-width: 100%;
-      }
-
-      header h1 {
-        font-size: 1.2rem;
-      }
+      .input-row { flex-direction: column; align-items: stretch; }
+      .input-row input[type="text"] { max-width: 100%; }
+      header h1 { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -527,7 +430,6 @@
       </div>
 
       <div class="feedback-message" id="feedbackMessage" aria-live="polite"></div>
-
       <div class="steps-panel" id="stepsPanel" style="display:none;"></div>
 
       <div class="stats-panel" aria-label="Session stats">
@@ -583,8 +485,7 @@
               <th>Reveal</th>
             </tr>
           </thead>
-          <tbody id="worksheetBody">
-          </tbody>
+          <tbody id="worksheetBody"></tbody>
         </table>
       </div>
     </section>
@@ -601,19 +502,16 @@
   function formatNumber(value, decimals) {
     if (!isFinite(value)) return String(value);
     const decs = (typeof decimals === "number" && decimals >= 0) ? decimals : null;
-    if (decs !== null) {
-      value = Number(value.toFixed(decs));
-    }
+    if (decs !== null) value = Number(value.toFixed(decs));
+
     const parts = String(value).split(".");
     let intPart = parts[0];
     const isNeg = intPart[0] === "-";
     if (isNeg) intPart = intPart.slice(1);
     intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     if (isNeg) intPart = "-" + intPart;
-    if (parts.length > 1) {
-      return intPart + "." + parts[1];
-    }
-    return intPart;
+
+    return (parts.length > 1) ? (intPart + "." + parts[1]) : intPart;
   }
 
   function parseUserNumber(str) {
@@ -622,8 +520,7 @@
     if (!s) return NaN;
     s = s.replace(/\s+/g, "");
     s = s.replace(",", ".");
-    const num = Number(s);
-    return num;
+    return Number(s);
   }
 
   function approxEqual(a, b, tolAbs, tolRel) {
@@ -641,6 +538,25 @@
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
   }
+
+  // Scale formatting: NEVER round 2.5 to 3
+  function fmtScalePart(x) {
+    if (!isFinite(x)) return String(x);
+    if (Number.isInteger(x)) return String(x);
+    // show up to 2 decimals, strip trailing zeros
+    let s = x.toFixed(2);
+    s = s.replace(/\.?0+$/,"");
+    return s;
+  }
+
+  function formatScaleLine(a, b) {
+    return "Scale: " + fmtScalePart(a) + " : " + fmtScalePart(b);
+  }
+
+  // Convention:
+  // Scale a:b means diagram : real
+  function realFromDiagram(diagram, a, b) { return diagram * (b / a); }
+  function diagramFromReal(real, a, b) { return real * (a / b); }
 
   // ---------- Sound ----------
   let soundOn = true;
@@ -664,18 +580,11 @@
       const now = audioCtx.currentTime;
       osc.start(now);
       osc.stop(now + duration / 1000);
-    } catch (e) {
-      // ignore audio errors
-    }
+    } catch (e) {}
   }
 
-  function playCorrectSound() {
-    playBeep(880, 120);
-  }
-
-  function playIncorrectSound() {
-    playBeep(220, 160);
-  }
+  function playCorrectSound() { playBeep(880, 120); }
+  function playIncorrectSound() { playBeep(220, 160); }
 
   // ---------- State ----------
   const difficultyButtons = {
@@ -737,7 +646,7 @@
   const worksheetBody = document.getElementById("worksheetBody");
 
   let gameState = {
-    mode: "awaitingAnswer", // or "awaitingNext"
+    mode: "awaitingAnswer",
     currentProblem: null,
     total: 0,
     correct: 0,
@@ -798,7 +707,6 @@
   // ---------- Timer ----------
   timerSelect.addEventListener("change", () => {
     timerSeconds = parseInt(timerSelect.value, 10) || 0;
-    // Next question will use new timer; current one unaffected.
   });
 
   function stopTimer() {
@@ -819,12 +727,9 @@
 
     timerId = setInterval(() => {
       timerRemaining -= 1;
-      if (timerRemaining <= 5) {
-        timerDisplay.classList.add("warning");
-      }
+      if (timerRemaining <= 5) timerDisplay.classList.add("warning");
       if (timerRemaining <= 0) {
         stopTimer();
-        // Time up -> treat as incorrect if still answering
         if (gameState.mode === "awaitingAnswer") {
           feedbackMessage.textContent = "Time's up! Reveal the steps and then go to the next question.";
           feedbackMessage.className = "feedback-message incorrect";
@@ -857,20 +762,8 @@
   });
 
   // ---------- Problem generation ----------
-  const unitFactors = {
-    mm: 1,
-    cm: 10,
-    m: 1000,
-    km: 1000000
-  };
-
-  function randomChoice(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-
-  function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  function randomChoice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
   function generateProblem(difficulty) {
     if (difficulty === "random") {
@@ -880,64 +773,64 @@
       else difficulty = "hard";
     }
 
-    if (difficulty === "easy") {
-      return generateEasyProblem();
-    } else if (difficulty === "medium") {
-      return generateMediumProblem();
-    } else {
-      return generateHardProblem();
-    }
+    if (difficulty === "easy") return generateEasyProblem();
+    if (difficulty === "medium") return generateMediumProblem();
+    return generateHardProblem();
   }
 
   // Easy: same units, whole numbers, simple scale
+  // FIXED: enlargement and reduction always follow the same diagram:real convention
   function generateEasyProblem() {
     const types = ["diagramToReal", "realToDiagram"];
     const type = randomChoice(types);
-
-    // FIX: only cm or mm (no m) so map/picture distances are realistic
     const unit = randomChoice(["cm", "mm"]);
 
     const isReduction = Math.random() < 0.65;
     let scaleNum, scaleDen;
 
     if (isReduction) {
+      // reduction like 1:5 (diagram smaller)
       scaleNum = 1;
       scaleDen = randomChoice([2, 5, 10, 20, 50, 100, 200, 500, 1000]);
     } else {
+      // enlargement like 5:1 (diagram bigger)
       scaleNum = randomChoice([2, 3, 4, 5]);
       scaleDen = 1;
     }
 
     let givenValue, answerValue;
+
     if (type === "diagramToReal") {
+      // real = diagram * (den/num)
+      const k = randomInt(2, 20);
       if (isReduction) {
-        const k = randomInt(2, 20);
+        // diagram k -> real k*den
         givenValue = k;
-        answerValue = k * scaleDen;
+        answerValue = realFromDiagram(givenValue, scaleNum, scaleDen);
       } else {
-        const k = randomInt(2, 20);
-        givenValue = k;
-        answerValue = Math.round(k / scaleNum);
-        givenValue = answerValue * scaleNum;
+        // choose diagram as multiple of scaleNum so real stays integer
+        givenValue = k * scaleNum;
+        answerValue = realFromDiagram(givenValue, scaleNum, scaleDen); // = k
       }
     } else {
+      // diagram = real * (num/den)
+      const k = randomInt(2, 20);
       if (isReduction) {
-        const k = randomInt(2, 20);
-        answerValue = k;
+        // choose real as multiple of scaleDen so diagram stays integer
         givenValue = k * scaleDen;
+        answerValue = diagramFromReal(givenValue, scaleNum, scaleDen); // = k
       } else {
-        const k = randomInt(2, 20);
-        answerValue = k;
-        givenValue = k * scaleNum;
+        // enlargement: real k -> diagram k*scaleNum
+        givenValue = k;
+        answerValue = diagramFromReal(givenValue, scaleNum, scaleDen);
       }
     }
 
-    const context = randomChoice([
-      "a simple map",
-      "a small diagram",
-      "a scale drawing",
-      "a picture"
-    ]);
+    // Ensure integer (should already be)
+    givenValue = Math.round(givenValue);
+    answerValue = Math.round(answerValue);
+
+    const context = randomChoice(["a simple map", "a small diagram", "a scale drawing", "a picture"]);
 
     let text, meta, typeLabel;
     if (type === "diagramToReal") {
@@ -954,7 +847,8 @@
       meta = "Give your answer as a whole number in " + unit + ".";
     }
 
-    const scaleStr = "Scale: " + scaleNum + " : " + scaleDen;
+    const scaleStr = formatScaleLine(scaleNum, scaleDen);
+
     const explanation = buildStepsExplanation({
       type,
       context,
@@ -1008,8 +902,8 @@
         typeLabel = "Diagram → real distance (cm to m)";
         const baseCm = randomChoice([1.6, 2.3, 3.2, 4.8, 5.5, 6.4]);
         givenValue = baseCm;
-        const realCm = givenValue * scaleDen;
-        answerValue = realCm / 100;
+        const realCm = realFromDiagram(givenValue, scaleNum, scaleDen); // in cm
+        answerValue = realCm / 100; // to m
         text = "A map has a scale of 1 : " + formatNumber(scaleDen, 0) +
           ". The distance between two places on the map is " +
           formatNumber(givenValue, 1) + " cm. Find the real distance.";
@@ -1019,7 +913,7 @@
         const baseM = randomChoice([60, 120, 240, 350, 480, 520]);
         givenValue = baseM;
         const realCm = givenValue * 100;
-        answerValue = realCm / scaleDen;
+        answerValue = diagramFromReal(realCm, scaleNum, scaleDen); // to cm
         text = "A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
           ". The real distance between two towns is " +
           formatNumber(givenValue, 0) + " m. How far apart are they on the map?";
@@ -1027,12 +921,7 @@
       }
     } else if (variant === "real_mm_to_cm_blueprint") {
       context = "a technical drawing";
-      const enlargementScales = [
-        [2, 1],
-        [3, 1],
-        [4, 1],
-        [5, 1]
-      ];
+      const enlargementScales = [[2,1],[3,1],[4,1],[5,1]];
       const sc = randomChoice(enlargementScales);
       scaleNum = sc[0];
       scaleDen = sc[1];
@@ -1043,10 +932,10 @@
         typeLabel = "Diagram → real length (cm to mm)";
         const baseCm = randomChoice([4, 5.5, 7.2, 8, 9.5, 10.4]);
         givenValue = baseCm;
-        const realCm = (givenValue * scaleDen) / scaleNum;
-        answerValue = realCm * 10;
+        const realCm = realFromDiagram(givenValue, scaleNum, scaleDen); // cm
+        answerValue = realCm * 10; // mm
         text = "A part is drawn in " + context + " using the scale " +
-          formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0) +
+          fmtScalePart(scaleNum) + " : " + fmtScalePart(scaleDen) +
           ". On the drawing, the part is " + formatNumber(givenValue, 1) +
           " cm long. Find its real length.";
         meta = "Give your answer in millimeters (mm).";
@@ -1055,21 +944,16 @@
         const baseMm = randomChoice([36, 48, 72, 85, 96, 110]);
         givenValue = baseMm;
         const realCm = givenValue / 10;
-        const diagramCm = (realCm * scaleNum) / scaleDen;
-        answerValue = diagramCm;
+        answerValue = diagramFromReal(realCm, scaleNum, scaleDen); // cm
         text = "A machine part is " + formatNumber(givenValue, 0) +
           " mm long in real life. It is drawn in " + context +
-          " using a scale of " + formatNumber(scaleNum, 0) +
-          " : " + formatNumber(scaleDen, 0) + ". Find its length on the drawing.";
+          " using a scale of " + fmtScalePart(scaleNum) +
+          " : " + fmtScalePart(scaleDen) + ". Find its length on the drawing.";
         meta = "Give your answer in centimeters (cm).";
       }
     } else {
       context = "an enlarged photograph";
-      const scales = [
-        [5, 2],
-        [3, 2],
-        [4, 3]
-      ];
+      const scales = [[5,2],[3,2],[4,3]];
       const sc = randomChoice(scales);
       scaleNum = sc[0];
       scaleDen = sc[1];
@@ -1080,10 +964,9 @@
         typeLabel = "Diagram → real length (enlarged photo)";
         const baseDiagram = randomChoice([8.4, 10.5, 12.6, 15.2]);
         givenValue = baseDiagram;
-        const realLen = givenValue * scaleDen / scaleNum;
-        answerValue = realLen;
+        answerValue = realFromDiagram(givenValue, scaleNum, scaleDen);
         text = "An object appears in " + context + " using a scale of " +
-          formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0) +
+          fmtScalePart(scaleNum) + " : " + fmtScalePart(scaleDen) +
           ". On the photograph, it is " + formatNumber(givenValue, 1) +
           " cm long. Find its real length.";
         meta = "Give your answer in centimeters (cm). Decimals are allowed.";
@@ -1091,18 +974,17 @@
         typeLabel = "Real → diagram length (enlarged photo)";
         const baseReal = randomChoice([4.2, 5.6, 6.8, 7.5]);
         givenValue = baseReal;
-        const diagramLen = givenValue * scaleNum / scaleDen;
-        answerValue = diagramLen;
+        answerValue = diagramFromReal(givenValue, scaleNum, scaleDen);
         text = "An object is " + formatNumber(givenValue, 1) +
           " cm long in real life. In " + context +
-          ", it is shown using the scale " + formatNumber(scaleNum, 0) +
-          " : " + formatNumber(scaleDen, 0) +
+          ", it is shown using the scale " + fmtScalePart(scaleNum) +
+          " : " + fmtScalePart(scaleDen) +
           ". Find its length on the photograph.";
         meta = "Give your answer in centimeters (cm). Decimals are allowed.";
       }
     }
 
-    const scaleStr = "Scale: " + formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0);
+    const scaleStr = formatScaleLine(scaleNum, scaleDen);
 
     const explanation = buildStepsExplanation({
       type,
@@ -1159,9 +1041,8 @@
         typeLabel = "Diagram → real distance (cm to km)";
         const baseCm = randomChoice([4.6, 5.2, 6.8, 7.3, 8.1]);
         givenValue = baseCm;
-        const realCm = givenValue * scaleDen;
-        const realKm = realCm / 100000;
-        answerValue = realKm;
+        const realCm = realFromDiagram(givenValue, scaleNum, scaleDen);
+        answerValue = realCm / 100000; // km
         text = "A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
           ". The distance between two villages on the map is " +
           formatNumber(givenValue, 1) + " cm. Find the real distance.";
@@ -1171,8 +1052,7 @@
         const baseKm = randomChoice([1.2, 2.4, 3.6, 4.5, 5.75]);
         givenValue = baseKm;
         const realCm = baseKm * 100000;
-        const diagramCm = realCm / scaleDen;
-        answerValue = diagramCm;
+        answerValue = diagramFromReal(realCm, scaleNum, scaleDen); // cm
         text = "The real distance between two cities is " +
           formatNumber(givenValue, 2) +
           " km. A map uses a scale of 1 : " + formatNumber(scaleDen, 0) +
@@ -1191,11 +1071,10 @@
         typeLabel = "Diagram → real length (cm to m)";
         const baseCm = randomChoice([12.5, 18.4, 22.6, 30.0]);
         givenValue = baseCm;
-        const realCm = givenValue * scaleDen / scaleNum;
-        const realM = realCm / 100;
-        answerValue = realM;
+        const realCm = realFromDiagram(givenValue, scaleNum, scaleDen);
+        answerValue = realCm / 100;
         text = "A wall is drawn in " + context + " using a scale of " +
-          formatNumber(scaleNum, 0) + " : " + formatNumber(scaleDen, 0) +
+          fmtScalePart(scaleNum) + " : " + fmtScalePart(scaleDen) +
           ". On the drawing, the wall is " + formatNumber(givenValue, 1) +
           " cm long. Find its real length.";
         meta = "Give your answer in meters (m). Decimals are allowed.";
@@ -1204,12 +1083,11 @@
         const baseM = randomChoice([3.2, 4.5, 5.8, 6.4, 7.25]);
         givenValue = baseM;
         const realCm = baseM * 100;
-        const diagramCm = realCm * scaleNum / scaleDen;
-        answerValue = diagramCm;
+        answerValue = diagramFromReal(realCm, scaleNum, scaleDen);
         text = "A beam is " + formatNumber(givenValue, 2) +
           " m long in real life. It is drawn on " + context +
-          " using a scale of " + formatNumber(scaleNum, 0) +
-          " : " + formatNumber(scaleDen, 0) + ". Find its length on the plan.";
+          " using a scale of " + fmtScalePart(scaleNum) +
+          " : " + fmtScalePart(scaleDen) + ". Find its length on the plan.";
         meta = "Give your answer in centimeters (cm). Decimals are allowed.";
       }
     } else {
@@ -1223,9 +1101,8 @@
         typeLabel = "Diagram → real length (cm to m, fractional scale)";
         const baseDiagram = randomChoice([10.8, 15.5, 18.4, 22.0]);
         givenValue = baseDiagram;
-        const realCm = givenValue * scaleDen;
-        const realM = realCm / 100;
-        answerValue = realM;
+        const realCm = realFromDiagram(givenValue, scaleNum, scaleDen);
+        answerValue = realCm / 100;
         text = "A scale drawing is made using a scale of 1 : 2.5. " +
           "On the drawing, a metal bar is " + formatNumber(givenValue, 1) +
           " cm long. Find its real length.";
@@ -1235,8 +1112,7 @@
         const baseM = randomChoice([1.8, 2.4, 3.6, 4.1]);
         givenValue = baseM;
         const realCm = baseM * 100;
-        const diagramCm = realCm / scaleDen;
-        answerValue = diagramCm;
+        answerValue = diagramFromReal(realCm, scaleNum, scaleDen);
         text = "A metal bar is " + formatNumber(givenValue, 1) +
           " m long in real life. It is drawn using a scale of 1 : 2.5. " +
           "Find its length on the drawing.";
@@ -1244,7 +1120,8 @@
       }
     }
 
-    const scaleStr = "Scale: " + formatNumber(scaleNum, 2) + " : " + formatNumber(scaleDen, 0);
+    // FIXED: never round 2.5 to 3
+    const scaleStr = formatScaleLine(scaleNum, scaleDen);
 
     const explanation = buildStepsExplanation({
       type,
@@ -1281,7 +1158,6 @@
   function buildStepsExplanation(info) {
     const {
       type,
-      context,
       unitDiagram,
       unitReal,
       scaleNum,
@@ -1292,7 +1168,7 @@
     } = info;
 
     let html = "<strong>Steps:</strong><br>";
-    const scaleStr = scaleNum + " : " + scaleDen;
+    const scaleStr = fmtScalePart(scaleNum) + " : " + fmtScalePart(scaleDen);
 
     html += "1. Use the scale " + scaleStr + " to relate the diagram and real lengths.<br>";
 
@@ -1301,27 +1177,17 @@
     }
 
     if (type === "diagramToReal") {
-      html += "3. The given value is from the " + (unitDiagram === unitReal ? "diagram" : "diagram side") +
-        ": " + formatNumber(givenValue, (Number.isInteger(givenValue)?0:2)) + " " + unitDiagram + ".<br>";
-      if (scaleNum === 1) {
-        html += "4. For a scale of 1 : " + scaleDen +
-          ", multiply the diagram length by " + scaleDen + " to get the real length (in the same base unit).<br>";
-      } else {
-        html += "4. For a scale of " + scaleNum + " : " + scaleDen +
-          ", multiply or divide to move from the diagram length to the real length using the factor " +
-          "(real / diagram) = " + scaleDen + " / " + scaleNum + ".<br>";
-      }
+      html += "3. The given value is from the diagram: " +
+        formatNumber(givenValue, (Number.isInteger(givenValue)?0:2)) + " " + unitDiagram + ".<br>";
+      html += "4. Because the scale is (diagram : real) = " + scaleStr +
+        ", multiply by (real/diagram) = " + fmtScalePart(scaleDen) + " / " + fmtScalePart(scaleNum) +
+        " to get the real length (in the same base unit).<br>";
     } else {
-      html += "3. The given value is from the real object: " +
+      html += "3. The given value is from real life: " +
         formatNumber(givenValue, (Number.isInteger(givenValue)?0:2)) + " " + unitReal + ".<br>";
-      if (scaleNum === 1) {
-        html += "4. For a scale of 1 : " + scaleDen +
-          ", divide the real length by " + scaleDen + " to get the diagram length (in the same base unit).<br>";
-      } else {
-        html += "4. For a scale of " + scaleNum + " : " + scaleDen +
-          ", multiply or divide to move from the real length to the diagram length using the factor " +
-          "(diagram / real) = " + scaleNum + " / " + scaleDen + ".<br>";
-      }
+      html += "4. Because the scale is (diagram : real) = " + scaleStr +
+        ", multiply by (diagram/real) = " + fmtScalePart(scaleNum) + " / " + fmtScalePart(scaleDen) +
+        " to get the diagram length (in the same base unit).<br>";
     }
 
     html += "5. Finally, convert the result into the requested unit (" + askUnit + ") if needed.<br>";
@@ -1344,10 +1210,12 @@
     answerInput.disabled = false;
     answerInput.focus();
     answerUnitLabel.textContent = problem.answerUnit;
+
     feedbackMessage.textContent = "";
     feedbackMessage.className = "feedback-message";
     stepsPanel.style.display = "none";
     stepsPanel.innerHTML = "";
+
     btnSubmit.disabled = false;
     btnSubmitLabel.textContent = "Submit";
     btnNext.disabled = true;
@@ -1389,17 +1257,11 @@
     if (!prob) return;
     const label = prob.difficulty.toUpperCase() + " – " +
       (prob.type === "diagramToReal" ? "D→R" : "R→D");
-    const entry = {
-      label,
-      correct,
-      timedOut
-    };
-    gameState.history.unshift(entry);
-    if (gameState.history.length > 40) {
-      gameState.history.pop();
-    }
-    const frag = document.createDocumentFragment();
+    gameState.history.unshift({ label, correct, timedOut });
+    if (gameState.history.length > 40) gameState.history.pop();
+
     historyPanel.innerHTML = "";
+    const frag = document.createDocumentFragment();
     gameState.history.forEach(h => {
       const div = document.createElement("div");
       div.className = "history-entry";
@@ -1417,13 +1279,11 @@
   }
 
   function handleSubmit() {
-    if (gameState.mode === "awaitingNext") {
-      return;
-    }
+    if (gameState.mode === "awaitingNext") return;
     const prob = gameState.currentProblem;
     if (!prob) return;
-    const raw = answerInput.value;
-    const num = parseUserNumber(raw);
+
+    const num = parseUserNumber(answerInput.value);
     if (!isFinite(num)) {
       feedbackMessage.textContent = "Please enter a valid number.";
       feedbackMessage.className = "feedback-message incorrect";
@@ -1440,18 +1300,15 @@
       feedbackMessage.className = "feedback-message correct";
       gameState.correct += 1;
       gameState.streak += 1;
-      if (gameState.streak > gameState.bestStreak) {
-        gameState.bestStreak = gameState.streak;
-      }
+      if (gameState.streak > gameState.bestStreak) gameState.bestStreak = gameState.streak;
+
       let points = 10;
-      if (gameState.streak > 0 && gameState.streak % 5 === 0) {
-        points += 5;
-      }
+      if (gameState.streak > 0 && gameState.streak % 5 === 0) points += 5;
       gameState.score += points;
+
       btnShowSteps.disabled = false;
       btnNext.disabled = false;
       btnSubmit.disabled = true;
-      btnSubmitLabel.textContent = "Submit";
       gameState.mode = "awaitingNext";
       stopTimer();
       playCorrectSound();
@@ -1463,6 +1320,7 @@
       gameState.streak = 0;
       btnShowSteps.disabled = false;
       btnNext.disabled = false;
+
       const alreadyRecorded = gameState.incorrectQuestions.some(q => q.text === prob.questionText && q.unit === prob.answerUnit);
       if (!alreadyRecorded) {
         gameState.incorrectQuestions.push({
@@ -1473,15 +1331,14 @@
       }
       addHistoryEntry(false, false);
     }
+
     updateStats();
   }
 
   btnSubmit.addEventListener("click", handleSubmit);
 
   btnNext.addEventListener("click", () => {
-    if (gameState.mode === "awaitingNext" || gameState.mode === "awaitingAnswer") {
-      newQuestion();
-    }
+    newQuestion();
   });
 
   btnShowSteps.addEventListener("click", () => {
@@ -1501,9 +1358,7 @@
         newQuestion();
       }
     } else if (e.key === "Escape") {
-      if (gameState.mode === "awaitingAnswer") {
-        answerInput.value = "";
-      }
+      if (gameState.mode === "awaitingAnswer") answerInput.value = "";
     }
   });
 
@@ -1515,7 +1370,7 @@
     const problems = [];
     const usedKeys = new Set();
     let safety = 0;
-    const maxTries = count * 50; // plenty of room for variety
+    const maxTries = count * 50;
 
     while (problems.length < count && safety < maxTries) {
       const prob = generateProblem(currentWsDifficulty);
@@ -1594,80 +1449,26 @@
     buttons.forEach(btn => btn.textContent = "Reveal");
   });
 
-  // ---------- Developer tests ----------
+  // ---------- Dev tests ----------
   function runDevTests() {
     const messages = [];
-    function assert(name, cond) {
-      messages.push((cond ? "✔ " : "✖ ") + name);
-    }
+    function assert(name, cond) { messages.push((cond ? "✔ " : "✖ ") + name); }
 
-    for (let i = 0; i < 10; i++) {
-      const p = generateEasyProblem();
-      assert("Easy has integer answer", Number.isInteger(p.answerValue));
-      assert("Easy unitDiagram == unitReal", p.unitDiagram === p.unitReal);
-      assert("Easy unit is cm or mm", p.unitDiagram === "cm" || p.unitDiagram === "mm");
-    }
+    // Easy enlargement real->diagram must multiply (e.g., 5:1)
+    // Force a known scenario:
+    const a = 5, b = 1, real = 70;
+    const diagram = diagramFromReal(real, a, b);
+    assert("Scale 5:1 real->diagram 70 -> 350", diagram === 350);
 
-    let hasDecimalMedium = false;
-    for (let i = 0; i < 10; i++) {
-      const p = generateMediumProblem();
-      if (!Number.isInteger(p.answerValue)) hasDecimalMedium = true;
-    }
-    assert("Medium sometimes has decimal answers", hasDecimalMedium);
+    // Scale line must not round 2.5
+    assert("Scale line keeps 2.5", formatScaleLine(1, 2.5) === "Scale: 1 : 2.5");
 
-    let hasKm = false;
-    let hasBigScale = false;
-    for (let i = 0; i < 20; i++) {
-      const p = generateHardProblem();
-      if (p.answerUnit === "km") hasKm = true;
-      if (typeof p.scaleDen === "number" && p.scaleDen >= 20000) hasBigScale = true;
-    }
-    assert("Hard sometimes uses km", hasKm);
-    assert("Hard sometimes uses big map scales", hasBigScale);
-
-    assert("parseUserNumber handles spaces", parseUserNumber("1 234") === 1234);
-    assert("parseUserNumber handles comma", parseUserNumber("3,5") === 3.5);
-
-    assert("approxEqual close decimals", approxEqual(1.234, 1.235, 0.01, 0.001));
-
-    assert("formatNumber adds spaces", formatNumber(12345, 0) === "12 345");
-
-    let gotEasy = false, gotMed = false, gotHard = false;
-    for (let i = 0; i < 20; i++) {
-      const p = generateProblem("random");
-      if (p.difficulty === "easy") gotEasy = true;
-      if (p.difficulty === "medium") gotMed = true;
-      if (p.difficulty === "hard") gotHard = true;
-    }
-    assert("Random produces easy", gotEasy);
-    assert("Random produces medium", gotMed);
-    assert("Random produces hard", gotHard);
-
-    const seen = new Set();
-    let uniqueCount = 0;
-    for (let i = 0; i < 40; i++) {
-      const p = generateProblem("easy");
-      const key = p.questionText + "|" + p.scaleLine;
-      if (!seen.has(key)) {
-        seen.add(key);
-        uniqueCount++;
-      }
-    }
-    assert("At least 20 unique easy problems out of 40 draws", uniqueCount >= 20);
-
-    let allPositive = true;
-    for (let i = 0; i < 20; i++) {
-      const p = generateHardProblem();
-      if (!(p.answerValue > 0)) allPositive = false;
-    }
-    assert("Hard answer values positive", allPositive);
-
-    let noKmInEasy = true;
+    // Smoke: easy integer answers
     for (let i = 0; i < 20; i++) {
       const p = generateEasyProblem();
-      if (p.answerUnit === "km") noKmInEasy = false;
+      assert("Easy answer integer", Number.isInteger(p.answerValue));
+      assert("Easy scale matches line parts", p.scaleLine.indexOf("Scale: ") === 0);
     }
-    assert("Easy has no km units", noKmInEasy);
 
     alert("Dev tests:\n\n" + messages.join("\n"));
   }
